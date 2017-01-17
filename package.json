@@ -1,0 +1,59 @@
+{
+  "name": "react-redux-boilerplate",
+  "version": "1.0.0",
+  "description": "A simple React application boilerplate",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "start": "npm run build && webpack-dev-server --content-base dist/",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:fernandosouza/react-redux-boilerplate.git"
+  },
+  "keywords": [
+    "ui"
+  ],
+  "jest": {
+    "browser": true,
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/js/**/*.{js,jsx}"
+    ],
+    "setupFiles": [
+      "./jest-setup.js"
+    ],
+    "testRegex": "(/tests/.*|(\\.|/)(test|spec))\\.jsx?$",
+    "verbose": true
+  },
+  "author": "Fernando Souza",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/fernandosouza/ui-challenge#readme",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.17.0",
+    "babel-jest": "^16.0.0",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "bootstrap-sass": "^3.3.7",
+    "copy-webpack-plugin": "^4.0.1",
+    "enzyme": "^2.7.0",
+    "enzyme-to-json": "^1.4.5",
+    "jest": "^18.1.0",
+    "react": "^15.3.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.3.2",
+    "react-test-renderer": "^15.4.2",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "dependencies": {
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "whatwg-fetch": "^2.0.1"
+  }
+}
