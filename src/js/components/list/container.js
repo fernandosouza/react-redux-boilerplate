@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addNewTodo, loadTodos } from '../../actions';
 import { bindActionCreators } from 'redux';
+import TodoComponent from '../todo';
 
 import Todo from '../../todo';
 
@@ -50,9 +51,9 @@ class List extends Component {
     let status = todo.done ? 'DONE' : 'NOT DONE';
     return (
       <li
-        onClick={this.editTodo.bind(this, todo)}
         key={todo.id}>
-        {todo.title} - {status}
+        <TodoComponent todo={todo} edit={this.props.edit} />
+        <button onClick={this.editTodo.bind(this, todo)} type="button">Edit</button>
       </li>
     );
   }
