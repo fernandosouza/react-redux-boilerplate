@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { addNewTodo } from '../../actions';
 import { bindActionCreators } from 'redux';
 
+import Todo from '../../todo';
+
 // I'm going to transform this dumb component into a smart component
 // it basicaly means that I will connect this component to the
 // React-Redux Library.
@@ -12,14 +14,20 @@ class List extends Component {
     this.state = {};
   }
 
-  addNewTodo(event) {
+  addNewTodo() {
+    let todo = new Todo({title: this.state.todoTitle});
+    this.props.addNewTodo(todo);
+  }
+
+  handleSubmit(event) {
     event.preventDefault();
-    this.props.addNewTodo({
-      title: this.state.todoTitle
-    });
+    if (!this.state.todoTitle) {
+      return;
+    }
+    this.addNewTodo();
     this.setState({
       todoTitle: ''
-    })
+    });
   }
 
   handleTodoTitleChange(event) {
@@ -30,8 +38,9 @@ class List extends Component {
 
   renderItems() {
     return this.props.todos.map(todo => {
+      let status = todo.done ? 'DONE' : 'NOT DONE';
       return (
-        <li key={todo.title}>{todo.title}</li>
+        <li key={todo.title}>{todo.title} - {status}</li>
       );
     });
   }
@@ -44,7 +53,7 @@ class List extends Component {
           {this.renderItems()}
         </ul>
 
-        <form onSubmit={this.addNewTodo.bind(this)}>
+        <form onSubmit={this.handleSubmit.bind(this)}>
           <input autoFocus value={this.state.todoTitle} onChange={this.handleTodoTitleChange.bind(this)} type="text" name="title" />
           <button type="submit">Add new todo</button>
         </form>
