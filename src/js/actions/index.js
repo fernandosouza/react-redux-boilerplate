@@ -1,3 +1,6 @@
+export const LOAD_TODOS = 'LOAD_TODOS';
+export const NEW_TODO = 'NEW_TODO';
+
 export function addNewTodo(todo) {
   let set = firebase.database().ref('todo').push({
     title: todo.title,
@@ -5,7 +8,7 @@ export function addNewTodo(todo) {
   });
 
   return {
-    type: 'NEW_TODO',
+    type: NEW_TODO,
     payload: set.then(() => {
       return Promise.resolve(todo);
     })
@@ -28,7 +31,7 @@ export function loadTodos() {
   });
 
   return {
-    type: 'LOAD_TODOS',
+    type: LOAD_TODOS,
     payload: payload
   }
 }
