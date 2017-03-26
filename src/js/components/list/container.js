@@ -96,9 +96,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    addNewTodo: addNewTodo,
-    loadTodos: loadTodos,
-    selectTodoForEditing: selectTodoForEditing
+    addNewTodo,
+    loadTodos,
+    selectTodoForEditing
   }, dispatch);
 }
 
