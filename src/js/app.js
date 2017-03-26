@@ -1,4 +1,5 @@
 import React from 'react';
+import List from './components/list/container';
 
 class App extends React.Component {
     constructor(props) {
@@ -8,7 +9,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <h1>React Boilerplate</h1>
+                <List/>
             </div>
         )
     }
