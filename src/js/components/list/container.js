@@ -13,6 +13,9 @@ class List extends Component {
   constructor(options) {
     super(options);
     this.state = {};
+  }
+
+  componentWillMount() {
     this.props.loadTodos();
   }
 
