@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import todoReducer from './reducer_todo';
+import todoReducer, { selectTodoForEditing } from './reducer_todo';
 
 // The Combine Reducer is where we crate our application state
 const rootReducer = combineReducers({
-  todos: todoReducer
+  todos: todoReducer,
+  selecteTodoForEditing: selectTodoForEditing
 });
 
 export default rootReducer;

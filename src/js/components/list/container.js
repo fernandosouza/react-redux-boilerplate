@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addNewTodo, loadTodos } from '../../actions';
+import { addNewTodo, loadTodos, selectTodoForEditing } from '../../actions';
 import { bindActionCreators } from 'redux';
 import TodoComponent from '../todo';
 
@@ -25,9 +25,7 @@ class List extends Component {
   }
 
   editTodo(todo) {
-    this.setState({
-      todoTitle: todo.title
-    });
+    this.props.selectTodoForEditing(todo);
   }
 
   handleSubmit(event) {
@@ -52,7 +50,7 @@ class List extends Component {
     return (
       <li
         key={todo.id}>
-        <TodoComponent todo={todo} edit={this.props.edit} />
+        <TodoComponent todo={todo} edit={this.props.selectedForEditing == todo} />
         <button onClick={this.editTodo.bind(this, todo)} type="button">Edit</button>
       </li>
     );
@@ -91,12 +89,17 @@ class List extends Component {
 function mapStateToProps(state) {
   // Whatever is returned willshow up as props inside the container above.
   return {
-    todos: state.todos
+    todos: state.todos,
+    selectedForEditing: state.selecteTodoForEditing
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addNewTodo: addNewTodo, loadTodos: loadTodos }, dispatch);
+  return bindActionCreators({
+    addNewTodo: addNewTodo,
+    loadTodos: loadTodos,
+    selectTodoForEditing: selectTodoForEditing
+  }, dispatch);
 }
 
 // This is connecting the List component to the mapStateToProps

@@ -1,4 +1,4 @@
-import { NEW_TODO, LOAD_TODOS } from '../actions';
+import { NEW_TODO, LOAD_TODOS, SELECT_TODO_FOR_EDITING } from '../actions';
 
 // A Reducer is a function that returns a peace of the application state.
 export default function(state = [], action) {
@@ -10,5 +10,14 @@ export default function(state = [], action) {
     return action.payload;
   }
 
-  return null;
+  return state;
+}
+
+
+export function selectTodoForEditing (state = null, action) {
+  if (action.type === SELECT_TODO_FOR_EDITING) {
+    return action.payload;
+  }
+
+  return state;
 }
