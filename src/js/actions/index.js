@@ -1,20 +1,31 @@
-import { fetchTodos, addTodo } from '../todo';
-
 export const LOAD_TODOS = 'LOAD_TODOS';
 export const NEW_TODO = 'NEW_TODO';
 export const SELECT_TODO_FOR_EDITING = 'SELECT_TODO_FOR_EDITING';
+export const REMOVE_TODO = 'REMOVE_TODO';
 
-export function addNewTodo(todo) {
-  return {
-    type: NEW_TODO,
-    payload: addTodo(todo)
-  };
+let todos = firebase.database().ref('todo');
+
+export function addTodoAction(todo) {
+  return dispatch => todos.push(todo);
 }
 
 export function loadTodos() {
-  return {
-    type: LOAD_TODOS,
-    payload: fetchTodos()
+  return dispatch => {
+    todos.on('value', snapshot => {
+      let data = [];
+      
+      snapshot.forEach(childSnapshot => {
+        let childData = childSnapshot.val();
+        childData.id = childSnapshot.key;
+
+        data.push(childData);
+      });
+
+      dispatch({
+        type: LOAD_TODOS,
+        payload: data
+      })
+    });
   }
 }
 
@@ -23,4 +34,8 @@ export function selectTodoForEditing(todo) {
     type: SELECT_TODO_FOR_EDITING,
     payload: todo
   }
+}
+
+export function removeTodoAction(key) {
+  return dispatch => todos.child(key).remove();
 }

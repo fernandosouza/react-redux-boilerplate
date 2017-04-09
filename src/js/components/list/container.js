@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addNewTodo, loadTodos, selectTodoForEditing } from '../../actions';
+import {
+  addTodoAction,
+  loadTodos,
+  selectTodoForEditing,
+  removeTodoAction } from '../../actions';
 import { bindActionCreators } from 'redux';
 import TodoComponent from '../todo';
 
@@ -21,14 +25,9 @@ class List extends Component {
 
   addNewTodo() {
     let todo = new Todo({
-      title: this.state.todoTitle,
-      id: this.props.todos.length + 1
+      title: this.state.todoTitle
     });
-    this.props.addNewTodo(todo);
-  }
-
-  editTodo(todo) {
-    this.props.selectTodoForEditing(todo);
+    this.props.addTodoAction(todo);
   }
 
   handleSubmit(event) {
@@ -50,11 +49,14 @@ class List extends Component {
 
   renderItems(todo) {
     let status = todo.done ? 'DONE' : 'NOT DONE';
+    let { removeTodoAction, selectTodoForEditing } = this.props;
+
     return (
       <li
         key={todo.id}>
         <TodoComponent todo={todo} edit={this.props.selectedForEditing == todo} />
-        <button onClick={this.editTodo.bind(this, todo)} type="button">Edit</button>
+        <button onClick={selectTodoForEditing.bind(this, todo)} type="button">Edit</button>
+        <button onClick={removeTodoAction.bind(this, todo.id)} type="button">Remove</button>
       </li>
     );
   }
@@ -99,9 +101,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    addNewTodo,
+    addTodoAction,
     loadTodos,
-    selectTodoForEditing
+    selectTodoForEditing,
+    removeTodoAction
   }, dispatch);
 }
 
