@@ -1,3 +1,5 @@
+'use strict';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -63,8 +65,8 @@ class List extends Component {
 
   render() {
     let emptyListMessage = () => {
-      if (!this.props.todos) {
-        return <p>Loading data</p>;
+      if (!this.props.todos.length) {
+        return <p>Fetching data</p>;
       }
       else {
         return this.props.todos.map(this.renderItems.bind(this));
