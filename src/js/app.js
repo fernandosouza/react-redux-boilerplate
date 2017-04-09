@@ -1,5 +1,5 @@
 import React from 'react';
-import List from './components/list/container';
+import List from './components/TodoContainer';
 
 class App extends React.Component {
     constructor(props) {

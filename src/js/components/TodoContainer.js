@@ -6,16 +6,16 @@ import {
   addTodoAction,
   loadTodos,
   selectTodoForEditing,
-  removeTodoAction } from '../../actions';
+  removeTodoAction } from '../actions';
 import { bindActionCreators } from 'redux';
-import TodoComponent from '../todo';
+import TodoComponent from './TodoComponent';
 
-import Todo from '../../todo';
+import Todo from '../todo';
 
 // I'm going to transform this dumb component into a smart component
 // it basicaly means that I will connect this component to the
 // React-Redux Library.
-class List extends Component {
+class TodoContainer extends Component {
   constructor(options) {
     super(options);
     this.state = {};
@@ -111,4 +111,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 // This is connecting the List component to the mapStateToProps
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoContainer);
