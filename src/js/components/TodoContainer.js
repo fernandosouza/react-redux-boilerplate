@@ -4,11 +4,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   addTodoAction,
+  editTodoAction,
   loadTodosAction,
   selectTodoForEditingAction,
   removeTodoAction } from '../actions';
 import { bindActionCreators } from 'redux';
 import TodoComponent from './TodoComponent';
+import TodoFormComponent from './TodoFormComponent';
 
 import Todo from '../todo';
 
@@ -25,28 +27,31 @@ class TodoContainer extends Component {
     this.props.loadTodosAction();
   }
 
-  addNewTodo() {
+  handleAddSubmit(title) {
+    if (!title) return;
+    
     let todo = new Todo({
-      title: this.state.todoTitle
+      title: title
     });
     this.props.addTodoAction(todo);
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    if (!this.state.todoTitle) {
-      return;
-    }
-    this.addNewTodo();
-    this.setState({
-      todoTitle: ''
-    });
+  handleEditSubmit(todo, title) {
+    if (!title) return;
+    todo.title = title;
+    this.props.editTodoAction(todo);
   }
 
-  handleTodoTitleChange(event) {
-    this.setState({
-      todoTitle: event.target.value
-    })
+  renderFormEdit(todo) {
+    let { selectedForEditing } = this.props;
+    if (selectedForEditing && selectedForEditing === todo) {
+      return (
+        <TodoFormComponent
+          todoTitle={selectedForEditing.title}
+          handleSubmit={this.handleEditSubmit.bind(this, todo)}
+          submitLabel="Save" />
+      )
+    };
   }
 
   renderItems(todo) {
@@ -56,38 +61,30 @@ class TodoContainer extends Component {
     return (
       <li
         key={todo.id}>
-        <TodoComponent todo={todo} edit={this.props.selectedForEditing == todo} />
+        <TodoComponent todo={todo} />
+        {this.renderFormEdit(todo)}
         <button onClick={selectTodoForEditingAction.bind(this, todo)} type="button">Edit</button>
         <button onClick={removeTodoAction.bind(this, todo.id)} type="button">Remove</button>
       </li>
     );
   }
 
-  render() {
-    let listItens = () => {
-      if (!this.props.todos.length) {
-        return <p>Fetching data</p>;
-      }
-      else {
-        return this.props.todos.map(this.renderItems.bind(this));
-      }
+  renderList() {
+    if (this.props.todos === null) {
+      return <p>Fetching data</p>;
+    } else if (!this.props.todos.length) {
+      return <p>You have no todo</p>;
+    } else {
+      return <ul>{this.props.todos.map(this.renderItems.bind(this))}</ul>;
     }
+  }
 
+  render() {
     return (
       <div className="list">
         <h1>List Component</h1>
-        <ul>
-          {listItens()}
-        </ul>
-
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <input
-            autoFocus
-            value={this.state.todoTitle}
-            onChange={this.handleTodoTitleChange.bind(this)}
-            type="text" />
-          <button type="submit">Add new todo</button>
-        </form>
+        {this.renderList()}
+        <TodoFormComponent handleSubmit={this.handleAddSubmit.bind(this)} />
       </div>
     )
   }
@@ -104,9 +101,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     addTodoAction,
+    editTodoAction,
     loadTodosAction,
     selectTodoForEditingAction,
-    removeTodoAction
+    removeTodoAction,
   }, dispatch);
 }
 

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class TodoComponent extends Component {
   constructor(opt) {
     super(opt);
-    this.state = {};
   }
 
   renderDetails() {
@@ -14,20 +13,10 @@ class TodoComponent extends Component {
     )
   }
 
-  renderFormEdit() {
-    return (
-      <form>
-        <input type="text" value={this.props.todo.title} />
-        <button type="button">Save</button>
-      </form>
-    )
-  }
-
   render() {
-    let content = this.props.edit === true ? this.renderFormEdit() : this.renderDetails();
     return (
       <div>
-        {content}
+        {this.renderDetails()}
       </div>
     )
   }
