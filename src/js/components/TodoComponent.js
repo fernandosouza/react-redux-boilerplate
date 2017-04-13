@@ -6,18 +6,14 @@ class TodoComponent extends Component {
   }
 
   renderDetails() {
-    return (
-      <div>
-        {this.props.todo.title}
-      </div>
-    )
+    return this.props.todo.title;
   }
 
   render() {
     return (
-      <div>
+      <p className="todo-title">
         {this.renderDetails()}
-      </div>
+      </p>
     )
   }
 }
