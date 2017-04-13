@@ -9,7 +9,7 @@ export function addTodoAction(todo) {
   return dispatch => todos.push(todo);
 }
 
-export function loadTodos() {
+export function loadTodosAction() {
   return dispatch => {
     todos.on('value', snapshot => {
       let data = [];
@@ -29,7 +29,7 @@ export function loadTodos() {
   }
 }
 
-export function selectTodoForEditing(todo) {
+export function selectTodoForEditingAction(todo) {
   return {
     type: SELECT_TODO_FOR_EDITING,
     payload: todo

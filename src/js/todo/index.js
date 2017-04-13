@@ -1,3 +1,5 @@
+'use strict';
+
 class Todo {
   constructor(options) {
     this.title = options.title || '';
@@ -5,11 +7,10 @@ class Todo {
   }
 }
 
-function addTodo(todo) {
+export function addTodo(todo) {
 }
 
 export function removeTodo(todo) {
 }
 
 export default Todo;
-export { addTodo };

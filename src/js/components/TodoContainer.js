@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   addTodoAction,
-  loadTodos,
-  selectTodoForEditing,
+  loadTodosAction,
+  selectTodoForEditingAction,
   removeTodoAction } from '../actions';
 import { bindActionCreators } from 'redux';
 import TodoComponent from './TodoComponent';
@@ -22,7 +22,7 @@ class TodoContainer extends Component {
   }
 
   componentWillMount() {
-    this.props.loadTodos();
+    this.props.loadTodosAction();
   }
 
   addNewTodo() {
@@ -51,13 +51,13 @@ class TodoContainer extends Component {
 
   renderItems(todo) {
     let status = todo.done ? 'DONE' : 'NOT DONE';
-    let { removeTodoAction, selectTodoForEditing } = this.props;
+    let { removeTodoAction, selectTodoForEditingAction } = this.props;
 
     return (
       <li
         key={todo.id}>
         <TodoComponent todo={todo} edit={this.props.selectedForEditing == todo} />
-        <button onClick={selectTodoForEditing.bind(this, todo)} type="button">Edit</button>
+        <button onClick={selectTodoForEditingAction.bind(this, todo)} type="button">Edit</button>
         <button onClick={removeTodoAction.bind(this, todo.id)} type="button">Remove</button>
       </li>
     );
@@ -104,8 +104,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     addTodoAction,
-    loadTodos,
-    selectTodoForEditing,
+    loadTodosAction,
+    selectTodoForEditingAction,
     removeTodoAction
   }, dispatch);
 }
