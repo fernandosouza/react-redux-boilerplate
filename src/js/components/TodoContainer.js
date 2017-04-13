@@ -41,7 +41,16 @@ class TodoContainer extends Component {
     this.props.editTodoAction(todo);
   }
 
-  renderFormEdit(todo) {
+  renderTodo(todo) {
+    return (
+      <div>
+        <TodoComponent todo={todo} />
+        {this.renderActionButtons(todo)}
+      </div>
+    )
+  }
+
+  renderFormEditOrTodo(todo) {
     let { selectedForEditing } = this.props;
     if (selectedForEditing && selectedForEditing === todo) {
       return (
@@ -50,7 +59,9 @@ class TodoContainer extends Component {
           handleSubmit={this.handleEditSubmit.bind(this, todo)}
           submitLabel="Save" />
       )
-    };
+    }
+
+    return this.renderTodo(todo);
   }
 
   renderList() {
@@ -59,21 +70,35 @@ class TodoContainer extends Component {
     } else if (!this.props.todos.length) {
       return <p>You have no todo</p>;
     } else {
-      return <ul>{this.props.todos.map(this.renderTodos.bind(this))}</ul>;
+      return <ul className="list-group">{this.props.todos.map(this.renderTodos.bind(this))}</ul>;
     }
+  }
+
+  renderActionButtons(todo) {
+    let { removeTodoAction, selectTodoForEditingAction } = this.props;
+
+    return (
+      <div className="btn-group pull-right todo-action-group" role="group">
+        <button
+          className="btn btn-default btn-sm"
+          onClick={selectTodoForEditingAction.bind(this, todo)}
+          type="button">Edit</button>
+        <button
+          className="btn btn-default btn-sm"
+          onClick={removeTodoAction.bind(this, todo.id)}
+          type="button">Remove</button>
+      </div>
+    )
   }
 
   renderTodos(todo) {
     let status = todo.done ? 'DONE' : 'NOT DONE';
-    let { removeTodoAction, selectTodoForEditingAction } = this.props;
 
     return (
       <li
+        className="list-group-item"
         key={todo.id}>
-        <TodoComponent todo={todo} />
-        {this.renderFormEdit(todo)}
-        <button onClick={selectTodoForEditingAction.bind(this, todo)} type="button">Edit</button>
-        <button onClick={removeTodoAction.bind(this, todo.id)} type="button">Remove</button>
+        {this.renderFormEditOrTodo(todo)}
       </li>
     );
   }

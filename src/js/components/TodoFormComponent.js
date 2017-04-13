@@ -27,12 +27,15 @@ class TodoFormComponent extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <input
-          autoFocus
-          value={this.state.todoTitle}
-          onChange={this.handleTodoTitleChange.bind(this)}
-          type="text" />
-        <button type="submit">{this.props.submitLabel || 'Add new todo'}</button>
+        <div className="form-group">
+          <input
+            className="form-control"
+            autoFocus
+            value={this.state.todoTitle}
+            onChange={this.handleTodoTitleChange.bind(this)}
+            type="text" />
+        </div>
+        <button className="btn btn-default" type="submit">{this.props.submitLabel || 'Add new todo'}</button>
       </form>
     )
   }
