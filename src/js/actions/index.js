@@ -9,6 +9,10 @@ export function addTodoAction(todo) {
   return dispatch => todos.push(todo);
 }
 
+export function editTodoAction(todo) {
+  return dispatch => firebase.database().ref('todo').child(todo.id).update(todo);
+}
+
 export function loadTodosAction() {
   return dispatch => {
     todos.on('value', snapshot => {
