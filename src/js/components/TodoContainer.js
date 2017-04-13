@@ -64,7 +64,7 @@ class TodoContainer extends Component {
   }
 
   render() {
-    let emptyListMessage = () => {
+    let listItens = () => {
       if (!this.props.todos.length) {
         return <p>Fetching data</p>;
       }
@@ -77,7 +77,7 @@ class TodoContainer extends Component {
       <div className="list">
         <h1>List Component</h1>
         <ul>
-          {emptyListMessage()}
+          {listItens()}
         </ul>
 
         <form onSubmit={this.handleSubmit.bind(this)}>
