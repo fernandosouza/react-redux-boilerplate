@@ -29,7 +29,6 @@ class TodoContainer extends Component {
 
   handleAddSubmit(title) {
     if (!title) return;
-    
     let todo = new Todo({
       title: title
     });
@@ -54,6 +53,16 @@ class TodoContainer extends Component {
     };
   }
 
+  renderList() {
+    if (this.props.todos === null) {
+      return <p>Fetching data</p>;
+    } else if (!this.props.todos.length) {
+      return <p>You have no todo</p>;
+    } else {
+      return <ul>{this.props.todos.map(this.renderTodos.bind(this))}</ul>;
+    }
+  }
+
   renderTodos(todo) {
     let status = todo.done ? 'DONE' : 'NOT DONE';
     let { removeTodoAction, selectTodoForEditingAction } = this.props;
@@ -67,16 +76,6 @@ class TodoContainer extends Component {
         <button onClick={removeTodoAction.bind(this, todo.id)} type="button">Remove</button>
       </li>
     );
-  }
-
-  renderList() {
-    if (this.props.todos === null) {
-      return <p>Fetching data</p>;
-    } else if (!this.props.todos.length) {
-      return <p>You have no todo</p>;
-    } else {
-      return <ul>{this.props.todos.map(this.renderTodos.bind(this))}</ul>;
-    }
   }
 
   render() {

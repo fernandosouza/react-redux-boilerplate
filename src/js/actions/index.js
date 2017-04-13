@@ -26,20 +26,20 @@ export function loadTodosAction() {
       });
 
       dispatch({
-        type: LOAD_TODOS,
-        payload: data
+        payload: data,
+        type: LOAD_TODOS
       })
     });
   }
 }
 
-export function selectTodoForEditingAction(todo) {
-  return {
-    type: SELECT_TODO_FOR_EDITING,
-    payload: todo
-  }
-}
-
 export function removeTodoAction(key) {
   return dispatch => todos.child(key).remove();
+}
+
+export function selectTodoForEditingAction(todo) {
+  return {
+    payload: todo,
+    type: SELECT_TODO_FOR_EDITING
+  }
 }
