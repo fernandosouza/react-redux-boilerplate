@@ -54,7 +54,7 @@ class TodoContainer extends Component {
     };
   }
 
-  renderItems(todo) {
+  renderTodos(todo) {
     let status = todo.done ? 'DONE' : 'NOT DONE';
     let { removeTodoAction, selectTodoForEditingAction } = this.props;
 
@@ -75,7 +75,7 @@ class TodoContainer extends Component {
     } else if (!this.props.todos.length) {
       return <p>You have no todo</p>;
     } else {
-      return <ul>{this.props.todos.map(this.renderItems.bind(this))}</ul>;
+      return <ul>{this.props.todos.map(this.renderTodos.bind(this))}</ul>;
     }
   }
 
